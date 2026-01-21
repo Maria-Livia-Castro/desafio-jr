@@ -4,7 +4,7 @@ API REST desenvolvida em Spring Boot para gerenciamento de usuários, com autent
 O projeto está totalmente dockerizado, pronto para rodar com docker-compose
 
 ⚙️ Tecnologias utilizadas
-- Java 21 (Eclipse Temurin)
+- Java 21 (Eclipse)
 - Spring Boot
 - Spring Security (JWT)
 - Spring Data JPA / Hibernate
@@ -84,7 +84,7 @@ Criar usuário
 curl -X POST http://localhost:8080/usuarios/novo \
   -H "Content-Type: application/json" \
   -d '{
-    "nome": "Maria Silva",
+    "nome": "Maria Livia",
     "email": "maria@email.com",
     "login": "maria123",
     "senha": "1234"
