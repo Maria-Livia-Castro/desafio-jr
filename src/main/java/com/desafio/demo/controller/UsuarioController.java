@@ -19,6 +19,7 @@ import com.desafio.demo.dto.UsuarioResponse;
 import com.desafio.demo.model.Usuario;
 import com.desafio.demo.service.UsuarioService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
@@ -51,6 +52,7 @@ public class UsuarioController {
 	}
 	
 	@GetMapping
+	@SecurityRequirement(name = "authJwt")
 	public ResponseEntity<List<UsuarioResponse>> listarTodos() {
 		List<Usuario> usuarios = service.listarTodos();
 		List<UsuarioResponse> usuariosResponse = new ArrayList<UsuarioResponse>();
@@ -68,6 +70,7 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/{id}")
+	@SecurityRequirement(name = "authJwt")
 	public ResponseEntity<UsuarioResponse> buscarPorId(@PathVariable Integer id){
 		Usuario usuario = service.buscarPorId(id);
 		UsuarioResponse usuarioResponse = new UsuarioResponse();
@@ -81,6 +84,7 @@ public class UsuarioController {
 	}
 	
 	@PutMapping("/{id}")
+	@SecurityRequirement(name = "authJwt")
 	public ResponseEntity<UsuarioResponse> atualizar(@PathVariable Integer id, @Valid @RequestBody UsuarioRequest usuarioRequest){
 		Usuario usuario = new Usuario();
 		usuario.setNome(usuarioRequest.getNome());
