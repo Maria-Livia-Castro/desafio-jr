@@ -32,7 +32,8 @@ O projeto está totalmente dockerizado, pronto para rodar com docker-compose
 - DELETE /usuarios/{id} → remove usuário (JWT obrigatório)
 
 🗄️ Configuração do banco de dados
-No arquivo application.yml
+No arquivo application.yml:
+
 spring:
   application:
     name: desafio-jr
