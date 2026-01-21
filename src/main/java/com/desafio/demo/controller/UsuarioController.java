@@ -1,5 +1,6 @@
 package com.desafio.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.desafio.demo.dto.UsuarioRequest;
+import com.desafio.demo.dto.UsuarioResponse;
 import com.desafio.demo.model.Usuario;
 import com.desafio.demo.service.UsuarioService;
 
@@ -28,29 +31,72 @@ public class UsuarioController {
 		this.service=service;
 	}
 	
-	@PostMapping
-	public ResponseEntity<Usuario> criar(@Valid @RequestBody Usuario usuario){
-		Usuario novo = service.criar(usuario);
-		return ResponseEntity.status(HttpStatus.CREATED).body(novo);
+	@PostMapping("/novo")
+	public ResponseEntity<UsuarioResponse> criar(@Valid @RequestBody UsuarioRequest usuarioRequest) {
+		Usuario usuario = new Usuario();
+		usuario.setNome(usuarioRequest.getNome());
+		usuario.setEmail(usuarioRequest.getEmail());
+		usuario.setLogin(usuarioRequest.getLogin());
+		usuario.setSenha(usuarioRequest.getSenha());
+		
+		usuario = service.criar(usuario);
+		
+		UsuarioResponse usuarioResponse = new UsuarioResponse();
+		usuarioResponse.setId(usuario.getId());
+		usuarioResponse.setNome(usuario.getNome());
+		usuarioResponse.setEmail(usuario.getEmail());
+		usuarioResponse.setLogin(usuario.getLogin());
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioResponse);
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Usuario>> listarTodos(){
-		return ResponseEntity.ok(service.listarTodos());
+	public ResponseEntity<List<UsuarioResponse>> listarTodos() {
+		List<Usuario> usuarios = service.listarTodos();
+		List<UsuarioResponse> usuariosResponse = new ArrayList<UsuarioResponse>();
+		for(Usuario usuario: usuarios) {
+			UsuarioResponse usuarioResponse = new UsuarioResponse();
+			usuarioResponse.setId(usuario.getId());
+			usuarioResponse.setNome(usuario.getNome());
+			usuarioResponse.setEmail(usuario.getEmail());
+			usuarioResponse.setLogin(usuario.getLogin());
+			usuariosResponse.add(usuarioResponse);
+		}
+		
+		return ResponseEntity.ok().body(usuariosResponse);
 		
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> buscarPorId(@PathVariable Integer id){
+	public ResponseEntity<UsuarioResponse> buscarPorId(@PathVariable Integer id){
 		Usuario usuario = service.buscarPorId(id);
-		return ResponseEntity.ok(usuario);
+		UsuarioResponse usuarioResponse = new UsuarioResponse();
+		usuarioResponse.setId(usuario.getId());
+		usuarioResponse.setNome(usuario.getNome());
+		usuarioResponse.setEmail(usuario.getEmail());
+		usuarioResponse.setLogin(usuario.getLogin());
+		
+		return ResponseEntity.ok().body(usuarioResponse);
 		
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Usuario> atualizar(@PathVariable Integer id, @Valid @RequestBody Usuario usuarioAtualizado){
-		Usuario usuario = service.atualizar(id, usuarioAtualizado);
-		return ResponseEntity.ok(usuario);
+	public ResponseEntity<UsuarioResponse> atualizar(@PathVariable Integer id, @Valid @RequestBody UsuarioRequest usuarioRequest){
+		Usuario usuario = new Usuario();
+		usuario.setNome(usuarioRequest.getNome());
+		usuario.setEmail(usuarioRequest.getEmail());
+		usuario.setLogin(usuarioRequest.getLogin());
+		usuario.setSenha(usuarioRequest.getSenha());
+		
+		usuario = service.atualizar(id, usuario);
+		
+		UsuarioResponse usuarioResponse = new UsuarioResponse();
+		usuarioResponse.setId(usuario.getId());
+		usuarioResponse.setNome(usuario.getNome());
+		usuarioResponse.setEmail(usuario.getEmail());
+		usuarioResponse.setLogin(usuario.getLogin());
+		
+		return ResponseEntity.ok().body(usuarioResponse);
 	}
 	
 	@DeleteMapping("/{id}")
