@@ -34,74 +34,30 @@ public class UsuarioController {
 	
 	@PostMapping("/novo")
 	public ResponseEntity<UsuarioResponse> criar(@Valid @RequestBody UsuarioRequest usuarioRequest) {
-		Usuario usuario = new Usuario();
-		usuario.setNome(usuarioRequest.getNome());
-		usuario.setEmail(usuarioRequest.getEmail());
-		usuario.setLogin(usuarioRequest.getLogin());
-		usuario.setSenha(usuarioRequest.getSenha());
-		
-		usuario = service.criar(usuario);
-		
-		UsuarioResponse usuarioResponse = new UsuarioResponse();
-		usuarioResponse.setId(usuario.getId());
-		usuarioResponse.setNome(usuario.getNome());
-		usuarioResponse.setEmail(usuario.getEmail());
-		usuarioResponse.setLogin(usuario.getLogin());
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioResponse);
-	}
+        UsuarioResponse usuarioResponse = service.criar(usuarioRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioResponse);
+    }
 	
 	@GetMapping
 	@SecurityRequirement(name = "authJwt")
 	public ResponseEntity<List<UsuarioResponse>> listarTodos() {
-		List<Usuario> usuarios = service.listarTodos();
-		List<UsuarioResponse> usuariosResponse = new ArrayList<UsuarioResponse>();
-		for(Usuario usuario: usuarios) {
-			UsuarioResponse usuarioResponse = new UsuarioResponse();
-			usuarioResponse.setId(usuario.getId());
-			usuarioResponse.setNome(usuario.getNome());
-			usuarioResponse.setEmail(usuario.getEmail());
-			usuarioResponse.setLogin(usuario.getLogin());
-			usuariosResponse.add(usuarioResponse);
-		}
-		
-		return ResponseEntity.ok().body(usuariosResponse);
-		
-	}
+        List<UsuarioResponse> usuariosResponse = service.listarTodos();
+        return ResponseEntity.ok().body(usuariosResponse);
+    }
 	
 	@GetMapping("/{id}")
 	@SecurityRequirement(name = "authJwt")
 	public ResponseEntity<UsuarioResponse> buscarPorId(@PathVariable Integer id){
-		Usuario usuario = service.buscarPorId(id);
-		UsuarioResponse usuarioResponse = new UsuarioResponse();
-		usuarioResponse.setId(usuario.getId());
-		usuarioResponse.setNome(usuario.getNome());
-		usuarioResponse.setEmail(usuario.getEmail());
-		usuarioResponse.setLogin(usuario.getLogin());
-		
-		return ResponseEntity.ok().body(usuarioResponse);
-		
-	}
+        UsuarioResponse usuarioResponse = service.buscarPorId(id);
+        return ResponseEntity.ok().body(usuarioResponse);
+    }
 	
 	@PutMapping("/{id}")
 	@SecurityRequirement(name = "authJwt")
 	public ResponseEntity<UsuarioResponse> atualizar(@PathVariable Integer id, @Valid @RequestBody UsuarioRequest usuarioRequest){
-		Usuario usuario = new Usuario();
-		usuario.setNome(usuarioRequest.getNome());
-		usuario.setEmail(usuarioRequest.getEmail());
-		usuario.setLogin(usuarioRequest.getLogin());
-		usuario.setSenha(usuarioRequest.getSenha());
-		
-		usuario = service.atualizar(id, usuario);
-		
-		UsuarioResponse usuarioResponse = new UsuarioResponse();
-		usuarioResponse.setId(usuario.getId());
-		usuarioResponse.setNome(usuario.getNome());
-		usuarioResponse.setEmail(usuario.getEmail());
-		usuarioResponse.setLogin(usuario.getLogin());
-		
-		return ResponseEntity.ok().body(usuarioResponse);
-	}
+        UsuarioResponse usuarioResponse = service.atualizar(id, usuarioRequest);
+        return ResponseEntity.ok().body(usuarioResponse);
+    }
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletar(@PathVariable Integer id){

@@ -1,4 +1,4 @@
-package com.desafio.demo.Security;
+package com.desafio.demo.security;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.desafio.demo.Util.JwtUtil;
+import com.desafio.demo.util.JwtUtil;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

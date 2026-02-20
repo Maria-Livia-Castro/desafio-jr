@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.desafio.demo.Util.JwtUtil;
 import com.desafio.demo.dto.LoginRequest;
 import com.desafio.demo.model.Usuario;
+import com.desafio.demo.util.JwtUtil;
 
 import lombok.AllArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.desafio.demo.Util;
+package com.desafio.demo.util;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

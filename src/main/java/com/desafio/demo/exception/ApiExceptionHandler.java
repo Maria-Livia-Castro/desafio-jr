@@ -36,8 +36,8 @@ public class ApiExceptionHandler {
                 .body("Erro inesperado: " + ex.getMessage());
     }
     
-    @ExceptionHandler(UsuarioDuplicadoException.class)
-    public ResponseEntity<String> handleUsuarioDuplicado(UsuarioDuplicadoException ex) {
+    @ExceptionHandler(com.desafio.demo.exception.UsuarioDuplicadoException.class)
+    public ResponseEntity<String> handleUsuarioDuplicado(com.desafio.demo.exception.UsuarioDuplicadoException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }
